@@ -21,6 +21,13 @@ It does not include the heavy or private runtime:
 - personal voice samples
 - generated private audio
 
+For full deployment details, read:
+
+```text
+DEPLOYMENT.md
+voicebox-runtime-notes.md
+```
+
 ## 2. Prepare The Runtime Layout
 
 A complete local runtime should look like this:
@@ -108,4 +115,3 @@ AI agents should:
 3. Start `scripts/start.ps1` or the skill helper.
 4. Use the local page or gateway to select a voice profile and generate WAV audio.
 5. Never assume private voice samples, generated audio, models, or cookies are included.
-

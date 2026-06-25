@@ -60,6 +60,7 @@ Read:
 
 ```text
 QUICKSTART.md
+DEPLOYMENT.md
 ```
 
 Short version:
@@ -86,6 +87,15 @@ The helper script is:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\skill\voicebox-local-synthesis\scripts\open_voicebox_page.ps1
+```
+
+## Deployment
+
+For model/runtime setup, backend download, and first-run instructions, read:
+
+```text
+DEPLOYMENT.md
+voicebox-runtime-notes.md
 ```
 
 ## Relationship To AI Video Workflow
@@ -130,4 +140,3 @@ Cookie、密钥、账号登录态
 ```
 
 如果要做完整可运行包，建议用 Release 或私有压缩包分发，不要把大模型和私人声音数据直接提交到 Git 仓库。
-

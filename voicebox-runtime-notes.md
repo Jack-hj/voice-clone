@@ -1,63 +1,87 @@
-# Voicebox 轻量包补齐说明
+# Voicebox Runtime Notes
 
-我检查过你给的 `voicebox-local-synthesis-no-env-deps.zip`。它缺的是运行环境，不是页面代码。
+This repository contains only the lightweight skill, gateway, Web UI, and helper scripts. A complete runnable setup also needs the Voicebox backend runtime and model cache.
 
-## 这个脚本补什么
+The helper script `setup-voicebox-runtime.ps1` prepares the missing runtime pieces.
 
-`setup-voicebox-runtime.ps1` 会做这些事：
-
-- 在已解压的轻量包目录里创建 `models/huggingface/hub/`
-- 把官方 Voicebox 仓库克隆到 `voicebox/`
-- 检查 Python 3.12+
-- 在 `voicebox/.venv/` 创建虚拟环境
-- 安装官方后端依赖
-- 保持原包的 `scripts/start.ps1` 启动方式不变
-
-## 你电脑当前缺什么
-
-- 已有：Git
-- 已有：Python 3.11.9
-- 已有：ffmpeg
-- 缺少：Python 3.12+
-- 缺少：Voicebox 后端依赖
-- 缺少：模型缓存
-
-官方后端要求 Python `>=3.12`，所以 Python 3.11 不建议硬跑。
-
-## 推荐操作
-
-先把原 zip 解压到一个固定目录，例如：
+## What The Setup Script Does
 
 ```powershell
-C:\Users\wang\Documents\voicebox-local-synthesis-no-env-deps
+powershell -ExecutionPolicy Bypass -File .\setup-voicebox-runtime.ps1 -PackageRoot "D:\path\to\voicebox-local-synthesis-no-env-deps"
 ```
 
-然后运行：
+It will:
+
+- create `models/huggingface/hub/`
+- clone the official Voicebox backend into `voicebox/`
+- check for Python 3.12+
+- create `voicebox/.venv/`
+- install backend Python dependencies
+- install `chatterbox-tts`
+- keep the local startup command as `scripts/start.ps1`
+
+The backend source used by the script is:
+
+```text
+https://github.com/jamiepine/voicebox
+```
+
+Official project pages:
+
+```text
+https://github.com/jamiepine/voicebox
+https://voicebox.sh
+https://docs.voicebox.sh
+```
+
+## Model Download Behavior
+
+This repository does not include model files.
+
+The Voicebox backend and its TTS dependencies may download models into the Hugging Face cache during first use. In this package, the cache is configured as:
+
+```text
+models/huggingface/hub/
+```
+
+The exact model files depend on the selected backend engine and upstream Voicebox/TTS configuration. Check the official Voicebox documentation if you need a specific engine or model family.
+
+## Recommended First Run
+
+1. Install Git.
+2. Install Python 3.12+.
+3. Make sure you have enough disk space for model downloads.
+4. Run setup:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\wang\Documents\Codex\2026-06-04\new-chat-2\outputs\setup-voicebox-runtime.ps1" -PackageRoot "C:\Users\wang\Documents\voicebox-local-synthesis-no-env-deps" -InstallPython312
+powershell -ExecutionPolicy Bypass -File .\setup-voicebox-runtime.ps1 -PackageRoot "D:\path\to\voicebox-local-synthesis-no-env-deps"
 ```
 
-如果你已经自己装好了 Python 3.12，可以不用 `-InstallPython312`：
+If Python 3.12 is not installed, you can let the script try `winget`:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\wang\Documents\Codex\2026-06-04\new-chat-2\outputs\setup-voicebox-runtime.ps1" -PackageRoot "C:\Users\wang\Documents\voicebox-local-synthesis-no-env-deps"
+powershell -ExecutionPolicy Bypass -File .\setup-voicebox-runtime.ps1 `
+  -PackageRoot "D:\path\to\voicebox-local-synthesis-no-env-deps" `
+  -InstallPython312
 ```
 
-补齐后启动：
+Then start:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\wang\Documents\voicebox-local-synthesis-no-env-deps\scripts\start.ps1"
+powershell -ExecutionPolicy Bypass -File .\scripts\start.ps1
 ```
 
-页面地址：
+Open:
 
 ```text
 http://127.0.0.1:3847/voicebox-clone
 ```
 
-## 注意
+## Hardware Notes
 
-第一次生成语音时，模型可能会从 HuggingFace 下载，体积可能较大。你的 GTX 1650 是 4GB 显存，适合先试 `0.6B` 小模型；如果显存不够，可能会退到 CPU 或报错，速度也会慢。
+Voice cloning and TTS can run slowly on CPU. GPU memory needs depend on the selected model and engine. Start with smaller models or default settings before trying larger engines.
 
-只用于合成你本人声音或你有授权的声音。
+## Safety And Privacy
+
+Only clone voices you own or have permission to use. Do not publish personal voice samples, generated private audio, cookies, API keys, or local profile data in a public repository.
+
