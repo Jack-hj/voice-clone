@@ -1,0 +1,48 @@
+# Runtime and generated data
+.venv/
+voicebox/
+models/
+python-runtime/
+voicebox-data/
+outputs/
+dist/
+build/
+logs/
+*.log
+*.tmp
+*.temp
+
+# Private voice and account data
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.opus
+*.cookie
+cookies/
+sessions/
+credentials/
+secrets/
+.env
+.env.*
+!.env.example
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local backups and editor metadata
+_backups/
+_local_backups/
+backups/
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini
+.DS_Store
+

@@ -1,0 +1,4 @@
+display_name: Voicebox Local Synthesis
+short_description: Open a local page for voice cloning and script-to-speech audio generation.
+default_prompt: Open the Voicebox local synthesis page so I can clone a voice or generate narration audio from an existing cloned voice.
+
